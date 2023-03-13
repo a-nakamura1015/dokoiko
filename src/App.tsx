@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Status, Wrapper } from "@googlemaps/react-wrapper";
+import { Map } from './Map';
 
 function App() {
+  const render = (status: Status) => {
+    return <h1>{status}</h1>;
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <Wrapper apiKey={"GOOGLE_MAP_API_KEY"} render={render}>
+    <Map style={{ flexGrow: "1", height: "100%" }} />
+  </Wrapper>
+);
 }
 
 export default App;
