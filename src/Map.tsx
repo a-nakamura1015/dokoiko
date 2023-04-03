@@ -1,10 +1,10 @@
-import React from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 
-const Map: React.FC<{}> = () => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [map, setMap] = React.useState<google.maps.Map>();
+const Map: FC<{}> = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<google.maps.Map>();
   
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && !map) {
       console.log("display map")
       navigator.geolocation.getCurrentPosition((position) => {
