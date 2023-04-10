@@ -7,7 +7,7 @@ function App() {
     return <h1>{status}</h1>;
   };
   return (
-    <Wrapper apiKey={""} render={render}>
+    <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY!} render={render}>
       <Map/>
     </Wrapper>
   );
