@@ -1,19 +1,19 @@
-import { FC, useRef, useState, useEffect } from 'react';
+import { FC, useRef, useState, useEffect, useContext } from 'react';
+import { MapContext } from './App';
 
 const Map: FC<{}> = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<google.maps.Map>();
+  const map = useContext(MapContext)
   
   useEffect(() => {
-    if (ref.current && !map) {
+    if (ref.current) {
       console.log("display map")
-      navigator.geolocation.getCurrentPosition((position) => {
-        setMap(new window.google.maps.Map(ref.current!, {
-          center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }, zoom: 15
-        }));
+      new window.google.maps.Map(ref.current!, {
+        center: {
+          lat: map.lat,
+          lng: map.lng
+        },
+        zoom: 15
       });
     }
   }, [ref, map]);
