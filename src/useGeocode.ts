@@ -1,5 +1,6 @@
 // useGeocode.ts
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { MapContext } from './App';
 
 declare const google: any;
 
@@ -9,7 +10,18 @@ interface GeocodeResult {
 }
 
 const useGeocode = () => {
-  const [coordinates, setCoordinates] = useState<GeocodeResult | null>(null);
+  const {geocodeResult, setGeocodeResult} = useContext(MapContext)
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setGeocodeResult(
+        {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
+      );
+    })
+  }, [])
 
   const getCoordinates = (location: string) => {
     const geocoder = new google.maps.Geocoder();
@@ -19,14 +31,14 @@ const useGeocode = () => {
         const latitude = results[0].geometry.location.lat();
         const longitude = results[0].geometry.location.lng();
         console.log(longitude)
-        setCoordinates({ lat: latitude, lng: longitude });
+        setGeocodeResult({ lat: latitude, lng: longitude });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   };
 
-  return { coordinates, getCoordinates };
+  return { coordinates: geocodeResult, getCoordinates };
 };
 
 export default useGeocode;

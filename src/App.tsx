@@ -9,7 +9,25 @@ const defaultValue = {
   lng: 0
 }
 
-export const MapContext = createContext(defaultValue)
+interface GeocodeResult {
+  lat: number;
+  lng: number;
+}
+
+type GeocodeResultType = {
+  geocodeResult: GeocodeResult,
+  setGeocodeResult: React.Dispatch<React.SetStateAction<GeocodeResult>>
+}
+
+const defaultGeocodeResult : GeocodeResultType = {
+  geocodeResult: {
+    lat: 0,
+    lng: 0
+  },
+  setGeocodeResult: () => {}
+}
+
+export const MapContext = createContext(defaultGeocodeResult)
 
 function App () {
   const render = (status: Status) => {
@@ -17,7 +35,7 @@ function App () {
   };
   const [map, setMap] = useState(defaultValue)
   return (
-    <MapContext.Provider value={map}>
+    <MapContext.Provider value={{geocodeResult:map, setGeocodeResult:setMap}}>
       <Header />
       <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY!} render={render}>
         <Map/>

@@ -70,7 +70,8 @@ const Modal: FC<ModalProps> = ({ open, onClose }) => {
       </div>
       <button onClick={(e) => onClose()}>close</button>
       <button onClick={(e) => {
-        getCoordinates(startingPosition)
+          getCoordinates(startingPosition)
+          onClose()
       }}>search</button>
     </ReactModal>
   );
