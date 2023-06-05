@@ -1,23 +1,22 @@
-import { FC, useRef, useState, useEffect, useContext } from 'react';
-import { MapContext } from './App';
-import useGeocode from './useGeocode';
+import { FC, useRef, useEffect } from 'react';
+import usePosition from './usePosition';
 
 const Map: FC<{}> = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const { coordinates } = useGeocode()
-  
+  const { position } = usePosition()
+
   useEffect(() => {
     if (ref.current) {
       console.log("display map")
       new window.google.maps.Map(ref.current!, {
         center: {
-          lat: coordinates.lat,
-          lng: coordinates.lng
+          lat: position.lat,
+          lng: position.lng
         },
         zoom: 15
       });
     }
-  }, [ref, coordinates]);
+  }, [ref, position]);
 
   return <div ref={ref} style={{height: "100%"}} />
 }

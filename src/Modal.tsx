@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import ReactModal from "react-modal";
-import useGeocode from "./useGeocode";
+import usePosition from "./usePosition";
 
 type ModalProps = {
   open: boolean;
   onClose: () => void;
 };
 const Modal: FC<ModalProps> = ({ open, onClose }) => {
-  const { coordinates, getCoordinates } = useGeocode()
+  const { updatePosition } = usePosition()
   const [useCurrentLocation, setUseCurrentLocation] = useState(false);
   const [startingPosition, setStartingPosition] = useState('');
   const [maxTravelTime, setMaxTravelTime] = useState('');
@@ -70,7 +70,7 @@ const Modal: FC<ModalProps> = ({ open, onClose }) => {
       </div>
       <button onClick={(e) => onClose()}>close</button>
       <button onClick={(e) => {
-          getCoordinates(startingPosition)
+          updatePosition(startingPosition)
           onClose()
       }}>search</button>
     </ReactModal>
